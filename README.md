@@ -2,6 +2,9 @@
 
 A small terminal tool to back up and restore Discord servers, written in TypeScript and run with [Bun](https://bun.com).
 
+## Inspiration 
+https://github.com/random-tools/Discord-Backup-Tool-V2 go check please :3
+
 ![Screenshot](assets/screenshot.png)
 
 ## Features
