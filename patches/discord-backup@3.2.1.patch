@@ -1,0 +1,49 @@
+diff --git a/node_modules/discord-backup/.bun-tag-64d2740baa486474 b/.bun-tag-64d2740baa486474
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/lib/load.js b/lib/load.js
+index 4dd5644e82ac1b26ee74847cd8db200bf2547c6d..1dad3618cf0d4596aab99b63ad652e71de50e069 100644
+--- a/lib/load.js
++++ b/lib/load.js
+@@ -76,11 +76,8 @@ const loadChannels = (guild, backupData, options) => {
+     backupData.channels.categories.forEach((categoryData) => {
+         loadChannelPromises.push(new Promise((resolve) => {
+             (0, util_1.loadCategory)(categoryData, guild).then((createdCategory) => {
+-                categoryData.children.forEach((channelData) => {
+-                    (0, util_1.loadChannel)(channelData, guild, createdCategory, options);
+-                    resolve(true);
+-                });
+-            });
++                Promise.allSettled(categoryData.children.map((channelData) => (0, util_1.loadChannel)(channelData, guild, createdCategory, options))).then(() => resolve(true));
++            }).catch(() => resolve(true));
+         }));
+     });
+     backupData.channels.others.forEach((channelData) => {
+diff --git a/lib/util.js b/lib/util.js
+index c092af71e659e6741d86566add53c3f5d0d6afea..6d52e6511093cde71d531fe4fa6447371f403c2b 100644
+--- a/lib/util.js
++++ b/lib/util.js
+@@ -166,7 +166,7 @@ async function loadCategory(categoryData, guild) {
+             });
+             await category.permissionOverwrites.set(finalPermissions);
+             resolve(category); // Return the category
+-        });
++        }).catch(() => resolve(null));
+     });
+ }
+ exports.loadCategory = loadCategory;
+@@ -266,12 +266,12 @@ async function loadChannel(channelData, guild, category, options) {
+                         });
+                     }));
+                 }
+-                return channel;
++                resolve(channel);
+             }
+             else {
+                 resolve(channel); // Return the channel
+             }
+-        });
++        }).catch(() => resolve(null));
+     });
+ }
+ exports.loadChannel = loadChannel;

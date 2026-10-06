@@ -1,0 +1,25 @@
+{
+  "name": "discordbackuptool",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "^1.4.2"
+  },
+  "peerDependencies": {
+    "typescript": "^7"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.8.1",
+    "discord-backup": "3.2.1",
+    "discord.js-selfbot-v13": "^3.7.1",
+    "gradient-string": "^3.0.0",
+    "json5": "^2.2.3"
+  },
+  "patchedDependencies": {
+    "discord-backup@3.2.1": "patches/discord-backup@3.2.1.patch"
+  }
+}

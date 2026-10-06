@@ -1,0 +1,9 @@
+{
+    /*
+        config the script here !
+    */
+
+    "token": "", // user tkn
+    "lang": "RU", // FR, EN, DE, SP, RU
+    "color": "purple", // blue, green, purple, pink, red, orange, yellow, cyan
+}
